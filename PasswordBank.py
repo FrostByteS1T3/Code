@@ -35,7 +35,12 @@ def go(password):
             f = open('Passwords.txt', 'a')
             content = win.getEntry('Password')
             encrypted_pass = AESEncryption.encrypt2(content)
-            f.write(win.getEntry('Name') + '\t' + win.getEntry('Username') + '\t' + str(encrypted_pass) + '\n')
+            # writes data to file
+            f.write(win.getEntry('Name') + '\t' + win.getEntry('Username') + '\t')
+            f.close()
+            f = open('Passwords.txt', 'ab')
+            f.write(encrypted_pass + '\n')
+            f.close()
             #win.clearAllEntries()
         if b1 == 'Delete':
             name_to_delete = win.getEntry('Name')
