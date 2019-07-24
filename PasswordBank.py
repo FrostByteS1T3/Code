@@ -36,10 +36,13 @@ def go(password):
             content = win.getEntry('Password')
             encrypted_pass = AESEncryption.encrypt2(content)
             # writes data to file
-            f.write(win.getEntry('Name') + '\t' + win.getEntry('Username') + '\t')
+            f.write(win.getEntry('Name') + '\n' + win.getEntry('Username') + '\n')
             f.close()
             f = open('Passwords.txt', 'ab')
-            f.write(encrypted_pass + '\n')
+            f.write(encrypted_pass)
+            f.close()
+            f = open('Passwords.txt', 'a')
+            f.write('\n')
             f.close()
             #win.clearAllEntries()
         if b1 == 'Delete':
@@ -51,7 +54,7 @@ def go(password):
             
     def start_gui():
         #time.sleep(10)
-
+        # setup gui for wallet
         
         win.setBg('Light blue')
         win.setFg('Black')
@@ -61,7 +64,9 @@ def go(password):
         win.addLabelEntry('Password', 4)
         win.addLabel('', 'Password Wallet', 1, 0, 0)
         win.addLabel('blankspace1', '', 5, 0, 0)
+        
         win.addButtons(['Create', 'Delete', 'Edit', 'Read', 'Exit'], buttons, 6, 0, 0)
+
 
 
         win.go()
