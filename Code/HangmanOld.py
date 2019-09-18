@@ -36,17 +36,17 @@ def get_next_letter(remaining_letters):
     while True:
         next_letter = input('Choose the next letter ').lower()
         if len(next_letter) != 1:
-            print('That is not a single letter')
+            app.errorBox('That is not a single letter')
         elif next_letter not in ascii_lowercase:
-            print('That is not a letter')
+            app.errorBox('That is not a letter')
         elif next_letter not in remaining_letters:
-            print('That has been guessed before')
+            app.errorBox('That has been guessed before')
         else:
             remaining_letters.remove(next_letter)
             return next_letter
 
 def play_hangman():
-    print('Starting a game of hangman')
+    app.infoBox('Starting a game of hangman')
     attempts_remaining = get_num_attempts()
     min_word_length = get_min_word_length()
     print('Selecting a word...')
@@ -79,9 +79,44 @@ def play_hangman():
     else:
         print('Better luck next time.')
     try_again = input('Would you like to try again [y/Y]')
-    return try_again.lower() == 'y'
+    return try_again.lower()
+
+
+def play_hangman_gui(app):
+    app.infoBox('', 'Starting a game of hangman')
+    attempts_remaining = get_num_attempts()
+    min_word_length = get_min_word_length()
+    app.infoBox('Selecting a word...')
+    word = get_random_word(min_word_length)
+    print()
+    idxs = [letter not in ascii_lowercase for letter in word]
+    remaining_letters = set(ascii_lowercase)
+    wrong_letters = []
+    word_solved = False
+    while attempts_remaining > 0 and not word_solved:
+        app.infoBox('Word: {0}'.format(get_display_word(word, idxs)))
+        app.infoBox('Attempts Remaining: {0}'.format(attempts_remaining))
+        app.infoBox('Previous Guesses: {0}'.format(' '.join(wrong_letters)))
+        next_letter = get_next_letter(remaining_letters)
+        if next_letter in word:
+            app.infoBox('{0} is in the word!'.format(next_letter))
+            for i in range(len(word)):
+                if word[i] == next_letter:
+                    idxs[i] = True
+        else:
+            app.infoBox('{0} is NOT in the word!'.format(next_letter))
+            attempts_remaining -= 1
+            wrong_letters.append(next_letter)
+        if False not in idxs:
+            word_solved = True
+        app.infoBox('The word is {0}'.format(word))
+    if word_solved == True:
+        app.infoBox('Nice job! You won.')
+    else:
+        app.infoBox('Better luck next time.')
+    try_again = input('Would you like to try again [y/Y]')
+    return try_again.lower()
+    app.go()
 if __name__ == '__main__':
     play_hangman()
     print('Done')
-    if try_again == 'y':
-        play_hangman()

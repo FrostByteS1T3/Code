@@ -42,10 +42,11 @@ def decrypt2(name):
     my_dict = {}
     with open('Passwords.txt') as fileobj:
         for line in fileobj:
-            key, *value = line.split("\t")
+            key, *value = line.split(":")
             my_dict[key] = value
     f = open('Master.txt', 'r')
     cipher = AESCipher(f.read())
     f.close()
     decrypted = cipher.decrypt(''.join(my_dict[name]))
     print(decrypted.strip())
+decrypt2('Test')

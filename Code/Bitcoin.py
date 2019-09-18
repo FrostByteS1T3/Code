@@ -9,5 +9,5 @@ def get_price():
         print 'not found'
     data = response.text
     price = data[132:140]
-    print '$' + price
+    print ('$' + price)
     return price

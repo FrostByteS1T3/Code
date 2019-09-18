@@ -1,0 +1,14 @@
+{
+    [
+        {
+            "name":"becu",
+            "username":"saul",
+            "encryptedPassword":"sfdlksdfjlksdfj"
+        },
+        {
+            "name":"paypal",
+            "username":"saul",
+            "encryptedPassword":"sdf;lkasdjvvc,"
+        }
+    ]
+}
