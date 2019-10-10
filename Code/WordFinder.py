@@ -1,5 +1,6 @@
 import os
-f = open('wordlist.txt', 'r')
+path = 'Code/wordlist.txt'
+f = open(path, 'r')
 
 length = int
 letters = []
